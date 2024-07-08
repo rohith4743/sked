@@ -4,8 +4,8 @@ export interface Event {
     description?: string,
     category: string,
     allday: boolean,
-    start?: Date;
-    end?: Date;
+    start: Date;
+    end: Date;
     repeat: {
         mon : boolean,
         tue : boolean,

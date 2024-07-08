@@ -1,10 +1,24 @@
 <div class="container">
     <div class="row">
       <div class="col-lg-6 order-2 order-lg-1">
-        <app-event [eventData]="eventData"></app-event>
+        <div class="my-3">
+          <h4>All Day Events</h4>
+        </div>
+        @for (event of allDayEvents; track event.id) {
+          <div class="my-3">
+            <app-event [eventData]="event" class="my-3"></app-event>
+          </div>
+        }
+        <hr>
+        @for (event of nonAllDayEvents; track event.id) {
+          <div class="my-3">
+            <app-event [eventData]="event" class="my-3"></app-event>
+          </div>
+        }
+        
       </div>
       <div class="col-lg-6 order-1 order-lg-2">
-        <div class="card border-primary mb-3">
+        <div class="card border-primary mb-3 my-3">
             <form [formGroup]="addEventForm" (submit)="addEvent()">
               
 

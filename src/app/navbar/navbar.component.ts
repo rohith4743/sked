@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,5 +11,10 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class NavbarComponent {
 
-  constructor(public router: Router){};
+  constructor(public router: Router, private auth :AuthService){};
+  username:string = sessionStorage.getItem("username") ?? 'Guest User'
+
+  logout() {
+    this.auth.logout()
+  }
 }

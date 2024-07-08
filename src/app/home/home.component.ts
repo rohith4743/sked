@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { EventComponent } from '../event/event.component';
 import { Event } from '../event';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-home',
@@ -11,30 +12,19 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  events: Event[] = [];
+  allDayEvents: Event[] = [];
+  nonAllDayEvents: Event[] = [];
   
-  eventData: Event = {
-    name: "play",
-    id : "someid",
-    start : new Date(),
-    end : new Date(),
-    repeat: {
-      sun: false,
-      mon : false,
-      tue: false,
-      wed: false, 
-      thu: false,
-      fri: false,
-      sat : false
-    },
-    category:"1",
-    allday: false,
-    username:"rohith",
-    description : "some event"
+  constructor(private eventService: EventService){}
 
+  ngOnInit(): void {
+    this.loadEvents()
   }
 
+  
   addEventForm = new FormGroup({
-    eventname : new FormControl(""),
+    eventname : new FormControl("", Validators.required),
     category : new FormControl(""),
     description : new FormControl(""),
     allday : new FormControl(false),
@@ -57,28 +47,56 @@ export class HomeComponent {
     return this.addEventForm.get('repeat') as FormGroup;
   }
   
-
+  private combineDateAndTime(date: Date |null | undefined, time: string |null| undefined): Date {
+    if (!date || !time) {
+      return new Date()
+    }
+    const [hours, minutes] = time.split(':').map(Number);
+    const combinedDate = new Date(date);
+    combinedDate.setHours(hours, minutes, 0, 0);
+    return combinedDate;
+  }
+  
   addEvent() {
     const formValue = this.addEventForm.value;
-    console.log(formValue)
+    const start = this.combineDateAndTime(formValue.startdate, formValue.starttime);
+    const end = this.combineDateAndTime(formValue.enddate, formValue.endtime);
     const newEvent: Event = {
       name: formValue.eventname ?? '',
-      start : new Date(),
-      end : new Date(),
+      start : start,
+      end : end,
       repeat: {
-        sun: false,
-        mon : false,
-        tue: false,
-        wed: false, 
-        thu: false,
-        fri: false,
-        sat : false
+        sun: formValue.repeat?.sun ?? false,
+        mon: formValue.repeat?.mon ?? false,
+        tue: formValue.repeat?.tue ?? false,
+        wed: formValue.repeat?.wed ?? false,
+        thu: formValue.repeat?.thu ?? false,
+        fri: formValue.repeat?.fri ?? false,
+        sat: formValue.repeat?.sat ?? false,
       },
-      category:"1",
-      allday: false,
+      category: formValue.category ?? '',
+      allday: formValue.allday ?? false,
       username:"rohith",
-      description : "some event"
+      description : formValue.description ?? ''
     }
-    console.log(newEvent);
+  }
+
+  loadEvents(): void {
+    this.eventService.getTasks().subscribe({
+      next: data => {
+        this.events = data;
+        this.allDayEvents = this.events.filter(event => event.allday);
+        this.nonAllDayEvents = this.events
+          .filter(event => !event.allday)
+          .sort((a, b) => {
+            if (a.start === b.start) {
+              return a.end.getTime() - b.end.getTime();
+            }
+            return a.start.getTime() - b.start.getTime();
+    });
+      },
+      error: err => console.log(err)
+       
+    });
   }
 }
