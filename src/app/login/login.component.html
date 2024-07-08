@@ -1,1 +1,40 @@
-<p>login works!</p>
+<div class="d-flex justify-content-center">
+    <div class="col-12 col-lg-4 col-md-6 align-self-center">
+        
+
+        <div class="card border-primary mb-3">
+            <form [formGroup]="loginForm" (submit)="login()">
+                <div class="card-header bg-transparent border-primary">Login</div>
+                <div class="card-body">
+                
+                    <div class="mb-3">
+                      <label for="username" class="form-label">User Name</label>
+                      <input type="email" class="form-control" id="username" formControlName = "username">
+                    </div>
+                    <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="password" formControlName = "password">
+                    </div>
+                    @if (logInSuccess) {
+                        <div class="alert alert-success mb-3" role="alert">
+                            Login Successful !!!
+                        </div>
+                    }
+                    @if (logInFail) {
+                        <div class="alert alert-danger mb-3" role="alert">
+                            The username or Email is not correct
+                        </div>
+                    }
+                    
+            </div>
+            <div class="card-footer bg-transparent border-primary">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            </form>
+            
+          </div>
+
+    </div>
+</div>
+
+

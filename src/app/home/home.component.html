@@ -1,1 +1,121 @@
-<p>home works!</p>
+<div class="container">
+    <div class="row">
+      <div class="col-lg-6 order-2 order-lg-1">
+        <app-event [eventData]="eventData"></app-event>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2">
+        <div class="card border-primary mb-3">
+            <form [formGroup]="addEventForm" (submit)="addEvent()">
+              
+
+                <div class="card-header bg-transparent border-primary justify-content-between align-items-center">
+                    <div class="d-none d-lg-block">
+                        Add Event
+                    </div>
+                    <button class="btn btn-primary d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCardBody" aria-expanded="false" aria-controls="collapseCardBody">
+                        Add Event <span>▼</span>
+                      </button>
+                </div>
+            
+                <div id="collapseCardBody" class="collapse d-lg-block">
+                    <div class="card-body row">
+                    
+                        <div class="mb-3">
+                            <label for="eventname" class="form-label">Event Name</label>
+                            <input type="text" class="form-control" id="eventname" formControlName = "eventname">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" formControlName = "description" rows="2"></textarea>
+                        </div>
+    
+                    
+                        <div class="mb-3">
+                          <label for="category" class="form-label">Category</label>
+                          <select class="form-select form-control" id="category" formControlName = "category">
+                            <option selected>Select a category</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Other</option>
+                          </select>
+                        </div>
+    
+    
+                        <div class="mb-3 ">
+                            <div class="form-check">
+                                <label for="allday" class="form-check-label">All Day</label>
+                                <input type="checkbox" class="form-check-input" id="allday" formControlName = "allday">
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 col-6">
+                          <label for="startdate" class="form-label">Start Date</label>
+                          <input type="date" class="form-control" id="startdate" formControlName = "startdate">
+                        </div>
+    
+                        <div class="mb-3 col-6">
+                            <label for="starttime" class="form-label">Start Time</label>
+                            <input type="time" class="form-control" id="starttime" formControlName = "starttime">
+                        </div>
+    
+                        <div class="mb-3 col-6">
+                            <label for="enddate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="enddate" formControlName = "enddate">
+                        </div>
+    
+                        <div class="mb-3 col-6">
+                            <label for="endtime" class="form-label">End Time</label>
+                            <input type="time" class="form-control" id="endtime" formControlName = "endtime">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="repeat" class="form-label">Repeat</label>
+                            <div class="form-control" id ="repeat" [formGroup]="repeatFormGroup">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="monday" formControlName="mon">
+                                    <label class="form-check-label" for="monday">Monday</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="tuesday" formControlName="tue">
+                                    <label class="form-check-label" for="tuesday">Tuesday</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="wednesday" formControlName="wed">
+                                    <label class="form-check-label" for="wednesday">Wednesday</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="thursday" formControlName="thu">
+                                    <label class="form-check-label" for="thursday">Thursday</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="friday" formControlName="fri">
+                                    <label class="form-check-label" for="friday">Friday</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="saturday" formControlName="sat">
+                                    <label class="form-check-label" for="saturday">Saturday</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="sunday" formControlName="sun">
+                                    <label class="form-check-label" for="sunday">Sunday</label>
+                                  </div>
+                            </div>
+                        </div>
+                          
+    
+                        
+                </div>
+                <div class="card-footer bg-transparent border-primary">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+                </div>
+                
+            
+            </form>
+            
+          </div>
+      </div>
+    </div>
+  </div>
+  
