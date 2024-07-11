@@ -1,7 +1,7 @@
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
       
-      <span class="navbar-brand"><a class="navbar-brand" routerLink="/home">Sked</a> | {{username}}</span>
+      <span class="navbar-brand"><a class="navbar-brand" routerLink="/home">Sked</a> <span>{{username | titlecase}}</span></span>
 
       @if (router.url == "/signup") {
         <a class="nav-link" routerLink="/login">Login</a>
