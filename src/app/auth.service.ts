@@ -13,21 +13,38 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  private loggedIn: boolean = false;
+
   login(username: string, password: string) {
     return this.http.post<any>(`${this.apiUrl}/users/api/login`, { username, password }).pipe(
       tap(res => {
         sessionStorage.setItem('token', res.jwtToken);
+        sessionStorage.setItem('id', res.id);
+        this.loggedIn = true;
       })
     );
+  }
+
+  signup(userData: any) {
+    return this.http.post<any>(`${this.apiUrl}/users/api/create`, userData);
   }
 
   logout() {
     sessionStorage.removeItem('token');
     this.router.navigate(['login']);
+    this.loggedIn = false
   }
 
   getToken() {
     return sessionStorage.getItem('token');
+  }
+
+  getId() {
+    return sessionStorage.getItem('id');
+  }
+
+  isLoggedIn() {
+    return this.loggedIn;
   }
 
 }

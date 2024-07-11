@@ -1,5 +1,5 @@
 export interface Event {
-    id?: string,
+    id?: number,
     name: string,
     description?: string,
     category: string,
@@ -14,6 +14,5 @@ export interface Event {
         fri : boolean,
         sat : boolean, 
         sun : boolean
-    },
-    username: string
+    }
 }

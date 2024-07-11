@@ -2,94 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Event } from './event';
 import { Observable, of } from 'rxjs';
+import { environment } from '../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
+
+  private apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  getTasks(): Observable<Event[]> {
-    const tasks :Event[] = [{
-      name: "play",
-      id : "someid",
-      start : new Date(),
-      end : new Date(new Date().getTime() + 60 * 60 * 1000),
-      repeat: {
-        sun: false,
-        mon : false,
-        tue: false,
-        wed: false, 
-        thu: false,
-        fri: false,
-        sat : false
-      },
-      category:"1",
-      allday: false,
-      username:"rohith",
-      description : "some event"
-  
-    },
-    {
-      name: "play",
-      id : "someid",
-      start : new Date(),
-      end : new Date(new Date().getTime() + 60 * 60 * 1000 * 24 * 2),
-      repeat: {
-        sun: false,
-        mon : false,
-        tue: false,
-        wed: false, 
-        thu: false,
-        fri: false,
-        sat : false
-      },
-      category:"1",
-      allday: true,
-      username:"rohith",
-      description : "some event"
-  
-    }, {
-      name: "play",
-      id : "someid",
-      start : new Date(new Date().getTime() + 60 * 60 * 500 * 3),
-      end : new Date(new Date().getTime() + 60 * 60 * 500 * 5),
-      repeat: {
-        sun: false,
-        mon : false,
-        tue: false,
-        wed: false, 
-        thu: false,
-        fri: false,
-        sat : false
-      },
-      category:"1",
-      allday: false,
-      username:"rohith",
-      description : "some event"
-  
-    }, {
-      name: "play",
-      id : "someid",
-      start : new Date(),
-      end : new Date(),
-      repeat: {
-        sun: false,
-        mon : false,
-        tue: false,
-        wed: false, 
-        thu: false,
-        fri: false,
-        sat : false
-      },
-      category:"1",
-      allday: true,
-      username:"rohith",
-      description : "some event"
-  
-    }];
-    return of(tasks);
+  getTasks(date: string): Observable<Event[]> {
+    const params = {
+      "date" : date
+    }
+    return this.http.get<Event[]>(`${this.apiUrl}/event/get-by-date`, {params});
   }
 
 

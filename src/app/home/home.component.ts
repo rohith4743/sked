@@ -76,13 +76,14 @@ export class HomeComponent {
       },
       category: formValue.category ?? '',
       allday: formValue.allday ?? false,
-      username:"rohith",
       description : formValue.description ?? ''
     }
+    console.log(newEvent);
   }
 
   loadEvents(): void {
-    this.eventService.getTasks().subscribe({
+    const date = new Date().toISOString().split('T')[0];
+    this.eventService.getTasks(date).subscribe({
       next: data => {
         this.events = data;
         this.allDayEvents = this.events.filter(event => event.allday);
