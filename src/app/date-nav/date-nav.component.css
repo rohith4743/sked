@@ -1,0 +1,72 @@
+.date-nav-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.current-date {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.date-selector {
+  display: none;
+}
+
+.date-selector.collapsed {
+  display: block;
+}
+
+.navigation-wrapper {
+  margin-bottom: 10px;
+}
+
+.navigation {
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.navigation::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
+}
+
+.navigation span {
+  flex: 0 0 auto;
+  padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.navigation .selected {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+
+
+
+
+.navigation {
+    width: 100%; /* Fixed width of the div */
+    overflow: hidden; /* Hide overflowing content */
+    white-space: nowrap; /* Prevent wrapping */
+    text-align: center; /* Center the text horizontally */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigation spam {
+    display: inline-block;
+}
+
+
+
+  
