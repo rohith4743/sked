@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,8 @@ export class AuthService {
       tap(res => {
         sessionStorage.setItem('token', res.jwtToken);
         sessionStorage.setItem('id', res.id);
-        sessionStorage.setItem('userName', res.userName);
+        // sessionStorage.setItem('userName', res.userName);
+        this.setUserName(res.userName);
         this.loggedIn = true;
       })
     );
@@ -41,6 +42,7 @@ export class AuthService {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('id');
     sessionStorage.removeItem('userName');
+    this.userNameSubject.next('');
     this.router.navigate(['login']);
     this.loggedIn = false
   }
@@ -59,6 +61,14 @@ export class AuthService {
 
   isLoggedIn() {
     return this.loggedIn;
+  }
+
+  private userNameSubject = new BehaviorSubject<string>(sessionStorage.getItem('userName') ?? '');
+  userName$ = this.userNameSubject.asObservable();
+
+  setUserName(userName: string): void {
+    sessionStorage.setItem('userName', userName);
+    this.userNameSubject.next(userName);
   }
 
 }
