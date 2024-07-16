@@ -3,7 +3,7 @@
         
         <div class="card-title text-capitalize mb-0">{{eventData.name}}</div>
         <div>
-            <a href="#" class="btn me-2" data-bs-toggle="collapse" href="#{{eventData.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a href="#" class="btn me-2" data-bs-toggle="collapse" href="#toggle{{eventData.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16" style="fill: blue;">
                     <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
               </svg>
@@ -33,11 +33,11 @@
             <p class="card-text">{{eventData.description}}</p>
         } @else {
             <div class="row">
-                <div class="col-7">
+                <div class="col-lg-7 col-6">
                     <h5 class="card-subtitle mb-2 text-muted">{{eventData.category}}</h5>
                     <p class="card-text">{{eventData.description}}</p>
                 </div>
-                <div class="col-5 text-end datetime fw-lighter text-secondary-emphasis mb-2">
+                <div class="col-lg-5 col-6 text-end datetime fw-lighter text-secondary-emphasis mb-2">
                     <p class="card-text time">{{eventData.start | dateTimeFormat }}</p>
                     <p class="card-text time">{{eventData.end | dateTimeFormat }}</p>
                 </div>
@@ -46,15 +46,15 @@
         
         
         
-        <div class="collapse" id="{{eventData.id}}">
+        <div class="collapse" id="toggle{{eventData.id}}">
             <div class=" container mb-3 mt-3 border-none">
                 <hr>
                 <form [formGroup]="eventForm" (submit)="saveChanges()">
-                    <div class="collapse d-lg-block">
+                    <!-- <div class="collapse"> -->
                         <div class="row">
                         
 
-                            <div class="mb-2 col-lg-6">
+                            <div class="mb-2 col-12 col-lg-6">
                                 <label for="eventname{{eventData.id}}" class="form-label small">Event Name</label>
                                 <input type="text" class="form-control" id="eventname{{eventData.id}}" formControlName = "eventname"
                                 [class.is-valid]="!eventForm.get('eventname')?.errors && (eventForm.get('eventname')?.touched || eventForm.get('eventname')?.dirty)"
@@ -65,7 +65,7 @@
                             </div>
 
 
-                              <div class="mb-2 col-lg-6">
+                              <div class="mb-2 col-12 col-lg-6">
                                     <label for="category" class="form-label small">Category</label>                    
                                     <ng-select [items]="categories" bindLabel="name" bindValue="value" placeholder="Select a category" formControlName="category" [addTag]="true" >
                                 </ng-select>
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3 col-3">
+                            <div class="mb-3 col-lg-3 col-6">
                                 <label for="startdate{{eventData.id}}" class="form-label small" >Start Date</label>
                                 <input type="date" class="form-control form-control-sm" id="startdate{{eventData.id}}" formControlName = "startdate"
                                 [class.is-valid]="!eventForm.get('startdate')?.errors && (eventForm.get('startdate')?.touched || eventForm.get('startdate')?.dirty)"
@@ -95,7 +95,7 @@
                               </div>
 
 
-                            <div class="mb-3 col-3" *ngIf="eventForm.get('allday')?.value == false">
+                            <div class="mb-3 col-lg-3 col-6" *ngIf="eventForm.get('allday')?.value == false">
                               
                                 <label for="starttime{{eventData.id}}" class="form-label small">Start Time</label>
                                 <input type="time" class="form-control form-control-sm" id="starttime{{eventData.id}}" formControlName = "starttime"
@@ -106,7 +106,7 @@
                                 </div>
                             </div>
 
-                              <div class="mb-3 col-3">
+                              <div class="mb-3 col-lg-3 col-6">
                                 <label for="enddate{{eventData.id}}" class="form-label small">End Date</label>
                                 <input type="date" class="form-control form-control-sm" id="enddate{{eventData.id}}" formControlName = "enddate"
                                 [class.is-valid]="!eventForm.get('enddate')?.errors && (eventForm.get('enddate')?.touched || eventForm.get('enddate')?.dirty)"
@@ -117,7 +117,7 @@
                             </div>
 
         
-                            <div class="mb-3 col-3" *ngIf="eventForm.get('allday')?.value == false">
+                            <div class="mb-3 col-lg-3 col-6" *ngIf="eventForm.get('allday')?.value == false">
                                 <label for="endtime{{eventData.id}}" class="form-label small">End Time</label>
                                 <input type="time" class="form-control form-control-sm" id="endtime{{eventData.id}}" formControlName = "endtime"
                                 [class.is-valid]="!eventForm.hasError('endTimeRequired') && (eventForm.get('endtime')?.touched || eventForm.get('endtime')?.dirty)"
@@ -190,7 +190,7 @@
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                             </div>
        
-                    </div>
+                    <!-- </div> -->
                     </div>
                     
              
