@@ -6,24 +6,24 @@
   <div class="date-selector" [class.collapsed]="isCollapsed">
       
     <div class="navigation-wrapper d-flex justify-content-center align-items-center">
-      <button class="btn btn-link " (click)="prevYear()">&laquo;</button>
+      <button class="btn btn-link text-white" (click)="prevYear()">&laquo;</button>
       <div class="navigation d-flex" #yearNav>
-        <span class="btn btn-link btn-sm text-dark" *ngFor="let year of displayedYears" [class.selected]="year === selectedYear" (click)="selectYear(year)">
+        <span class="btn btn-link btn-sm text-info" *ngFor="let year of displayedYears" [class.selected]="year === selectedYear" (click)="selectYear(year)">
           {{ year }}
         </span>
       </div>
-      <button class="btn btn-link " (click)="nextYear()">&raquo;</button>
+      <button class="btn btn-link text-white" (click)="nextYear()">&raquo;</button>
     </div>
 
     <!-- Month Navigation -->
     <div class="navigation-wrapper d-flex justify-content-center align-items-center">
-      <button class="btn btn-link " (click)="prevMonth()">&laquo;</button>
+      <button class="btn btn-link text-white" (click)="prevMonth()">&laquo;</button>
       <div class="navigation d-flex" #monthNav>
-        <span class="btn btn-link btn-sm text-dark" *ngFor="let month of displayedMonths" [class.selected]="month.value === selectedMonth" (click)="selectMonth(month.value)">
+        <span class="btn btn-link btn-sm text-info" *ngFor="let month of displayedMonths" [class.selected]="month.value === selectedMonth" (click)="selectMonth(month.value)">
           {{ month.name }}
         </span>
       </div>
-      <button class="btn btn-link " (click)="nextMonth()">&raquo;</button>
+      <button class="btn btn-link text-white" (click)="nextMonth()">&raquo;</button>
     </div>
 
   
@@ -31,15 +31,15 @@
 
     <!-- Day Navigation -->
     <div class="navigation-wrapper d-flex justify-content-center align-items-center">
-      <button class="btn btn-link " (click)="prevWeek()">&laquo;&laquo;</button>
-      <button class="btn btn-link " (click)="prevDay()">&lt;</button>
+      <button class="btn btn-link text-white" (click)="prevWeek()">&laquo;&laquo;</button>
+      <button class="btn btn-link text-white" (click)="prevDay()">&lt;</button>
       <div class="navigation d-flex" #dayNav>
-        <span class="btn btn-sm btn-link text-dark" *ngFor="let day of displayedDays" [class.selected]="day.date === selectedDate.getDate()" (click)="selectDay(day.date)">
+        <span class="btn btn-sm btn-link text-info" *ngFor="let day of displayedDays" [class.selected]="day.date === selectedDate.getDate()" (click)="selectDay(day.date)">
           {{ day.date }} {{ day.day }}
         </span>
       </div>
-      <button class="btn btn-link " (click)="nextDay()">&gt;</button>
-      <button class="btn btn-link " (click)="nextWeek()">&raquo;&raquo;</button>
+      <button class="btn btn-link text-white" (click)="nextDay()">&gt;</button>
+      <button class="btn btn-link text-white" (click)="nextWeek()">&raquo;&raquo;</button>
     </div>
   </div>
 </div>

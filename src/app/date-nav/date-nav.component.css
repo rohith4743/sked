@@ -47,10 +47,14 @@
 .navigation .selected {
   font-weight: bold;
   text-decoration: underline;
+  font-size:medium;
+  color: aqua;
 }
 
 
-
+.text-white{
+  font-size: larger;
+}
 
 
 .navigation {

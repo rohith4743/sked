@@ -1,0 +1,53 @@
+.form-control {
+    border-radius: 5px;
+    background-color: rgb(245, 201, 214);
+    border: 0;
+}
+
+.card-header{
+    padding: 10px;
+    padding-left: 30px;
+    text-transform: uppercase;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.card-body{
+    padding: 30px;
+    padding-bottom: 0%;
+}
+
+.card-footer{
+    padding: 0%;
+    padding-left: 30px;
+}
+
+.icon-container {
+    position: fixed;
+    bottom: -80px; /* Adjust as needed */
+    left: -80px; /* Adjust as needed */
+    opacity: 0.3; /* Adjust to blend the icon */
+    
+  }
+  
+  .icon-container svg {
+    width: 400px; /* Adjust size as needed */
+    height: 400px; /* Adjust size as needed */
+    fill: rgba(255, 255, 255, 0.3); /* Adjust color and transparency */
+  }
+
+  .icon-container-2 {
+    position: fixed;
+    top: -80px; /* Adjust as needed */
+    right: -80px; /* Adjust as needed */
+    opacity: 0.3; /* Adjust to blend the icon */
+    
+    
+  }
+  
+  .icon-container-2 svg {
+    width: 400px; /* Adjust size as needed */
+    height: 400px; /* Adjust size as needed */
+    fill: rgba(255, 255, 255, 0.3); /* Adjust color and transparency */
+  }

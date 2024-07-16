@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class NavbarComponent {
 
   constructor(public router: Router, private auth :AuthService){};
-  username:string = sessionStorage.getItem("userName") ?? 'Guest User'
+  username:string = sessionStorage.getItem("userName") ?? ''
 
   logout() {
     this.auth.logout()

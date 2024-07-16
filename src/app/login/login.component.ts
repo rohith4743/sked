@@ -49,6 +49,7 @@ export class LoginComponent {
             this.logInFail = true
             this.logInSuccess = false
             console.log(err.error.message || 'Failed to Login')
+            this.errorMessage = err.error.message || 'Failed to Login'
           }
         }
       )

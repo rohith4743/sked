@@ -1,0 +1,12 @@
+.full-screen-background {
+    
+    background: linear-gradient(to right, #ab4191, #020100); /* Example gradient */
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+  }
+  
+  .container-fluid {
+    padding: 0%;
+  }
+  
