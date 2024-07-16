@@ -14,5 +14,7 @@ export interface Event {
         fri : boolean,
         sat : boolean, 
         sun : boolean
-    }
+    },
+    repeatEndDate: Date | undefined,
+    repeatNever: boolean
 }

@@ -18,10 +18,10 @@
         </div>
         @for (event of nonAllDayEvents; track event.id) {
           <div class="my-3">
-            <app-event [eventData]="event" class="my-3"></app-event>
+            <app-event [eventData]="event" class="my-3" (refreshEmitter)="loadEvents(dateToday)" [dateToday]="dateToday"></app-event>
           </div>
         }
-        
+
       </div>
       <div class="col-lg-6 order-1 order-lg-2">
         <div class="card border-primary mb-3 my-3">

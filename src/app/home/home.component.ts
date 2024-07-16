@@ -21,6 +21,7 @@ export class HomeComponent {
   events: Event[] = [];
   allDayEvents: Event[] = [];
   nonAllDayEvents: Event[] = [];
+  dateToday = new Date()
 
   isRepeat: boolean = false;
 
@@ -50,9 +51,9 @@ export class HomeComponent {
     category : new FormControl("Other"),
     description : new FormControl(""),
     allday : new FormControl(false),
-    startdate : new FormControl(new Date(), Validators.required),
+    startdate : new FormControl(this.formatDate(new Date()), Validators.required),
     starttime : new FormControl(""),
-    enddate : new FormControl(new Date(), Validators.required),
+    enddate : new FormControl(this.formatDate(new Date()), Validators.required),
     endtime : new FormControl(""),
     repeat : new FormGroup({
       sun : new FormControl(false),
@@ -75,6 +76,7 @@ export class HomeComponent {
     });
   }
 
+
   repeatEndDateRequiredValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const repeatNever = control.get('repeatNever');
@@ -83,33 +85,47 @@ export class HomeComponent {
     };
   }
 
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+
 
   updateEvents($event: Date) {
+    this.dateToday = $event;
     this.loadEvents($event);
   }
-  
-
-  
-  
 
   get repeatFormGroup(): FormGroup {
     return this.addEventForm.get('repeat') as FormGroup;
   }
   
-  private combineDateAndTime(date: Date |null | undefined, time: string |null| undefined): Date {
+  private combineDateAndTime(date: string | null | undefined, time: string | null | undefined): Date {
     if (!date || !time) {
-      return new Date()
+        return new Date();
     }
     const [hours, minutes] = time.split(':').map(Number);
     const combinedDate = new Date(date);
-    combinedDate.setHours(hours, minutes, 0, 0);
-    return combinedDate;
+
+    const utcDate = new Date(combinedDate.getTime() + hours * 60 * 60 * 1000 + minutes * 60 * 1000);
+    return utcDate;
   }
+
   
   addEvent() {
+    
     const formValue = this.addEventForm.value;
-    const start = this.combineDateAndTime(formValue.startdate, formValue.starttime);
-    const end = this.combineDateAndTime(formValue.enddate, formValue.endtime);
+    var start = new Date();
+    var end = new Date();
+    if (formValue.allday) {
+      start = this.combineDateAndTime(formValue.startdate, "00:00");
+      end = this.combineDateAndTime(formValue.enddate, "23:59:59");
+    } else {
+      start = this.combineDateAndTime(formValue.startdate, formValue.starttime);
+      end = this.combineDateAndTime(formValue.enddate, formValue.endtime);
+    }
     const newEvent: Event = {
       name: formValue.eventname ?? '',
       start : start,
@@ -125,13 +141,24 @@ export class HomeComponent {
       },
       category: formValue.category ?? '',
       allday: formValue.allday ?? false,
-      description : formValue.description ?? ''
+      description : formValue.description ?? '',
+      repeatNever: formValue.repeatNever ?? false,
+      repeatEndDate : formValue.repeatEndDate ?? undefined
     }
-    console.log(newEvent);
+    
+    this.eventService.addEvent(newEvent).subscribe({
+      next: data => {
+        this.loadEvents(new Date());
+      },
+      error: err => {
+        this._snackBar.open(err.error.message || "unable to add event", "close");
+        console.log(err.error.message);
+      }
+    })
   }
 
   loadEvents(dateReq: Date): void {
-    const date = dateReq.toISOString().split('T')[0];
+    const date = this.formatDate(dateReq)
     this.eventService.getTasks(date).subscribe({
       next: data => {
         this.events = data.map(event => ({
@@ -139,7 +166,7 @@ export class HomeComponent {
           start: new Date(event.start),
           end: new Date(event.end)
         }));
-        console.log(this.events);  // Now 'start' and 'end' should be Date objects
+        console.log(this.events);
         this.allDayEvents = this.events.filter(event => event.allday);
         this.nonAllDayEvents = this.events
           .filter(event => !event.allday)

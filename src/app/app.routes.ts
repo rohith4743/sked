@@ -3,6 +3,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { authGuard } from './auth.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routes: Routes = [
     {
@@ -25,5 +26,9 @@ export const routes: Routes = [
         component : HomeComponent,
         title : "Sked Home",
         canActivate: [authGuard]
+    },
+    {
+        path : "**",
+        component: PageNotFoundComponent
     }
 ];

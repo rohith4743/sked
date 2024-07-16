@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-date-nav',
@@ -177,6 +177,14 @@ export class DateNavComponent {
 
   container_width: number | undefined;
 
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'ArrowLeft') {
+      this.prevDay();
+    } else if (event.key === 'ArrowRight') {
+      this.nextDay();
+    }
+  }
   
   
 }

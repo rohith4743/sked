@@ -20,5 +20,21 @@ export class EventService {
     return this.http.get<Event[]>(`${this.apiUrl}/event/get-by-date`, {params});
   }
 
+  addEvent(event: Event) {
+    return this.http.post<any>(`${this.apiUrl}/event/add`, event)
+  }
+
+  updateEvent(event: Event, id: number | undefined){
+    return this.http.post<any>(`${this.apiUrl}/event/edit/${id}`, event)
+  }
+
+  deleteInstance(id: number | undefined, date: string) {
+    return this.http.delete(`${this.apiUrl}/event/delete/${id}/${date}`)
+  }
+
+  deleteEvent(id : number | undefined) {
+    return this.http.delete(`${this.apiUrl}/event/delete/${id}`);
+  }
+
 
 }

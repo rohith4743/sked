@@ -3,12 +3,12 @@
         
         <div class="card-title mb-0">{{eventData.name}}</div>
         <div>
-            <a href="#" class="btn me-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a href="#" class="btn me-2" data-bs-toggle="collapse" href="#{{eventData.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16" style="fill: blue;">
                     <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
               </svg>
             </a>
-            <button type="button" class="btn me-2">
+            <button type="button" class="btn me-2" data-bs-toggle="modal" [attr.data-bs-target]="'#confirmDeleteModal' + eventData.id">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16" style="fill: red;">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
@@ -38,17 +38,17 @@
         
         
         
-        <div class="collapse" id="collapseExample">
+        <div class="collapse" id="{{eventData.id}}">
             <div class=" container mb-3 mt-3 border-none">
                 <hr>
-                <form [formGroup]="eventForm" >
-                    <div id="collapseCardBody" class="collapse d-lg-block">
+                <form [formGroup]="eventForm" (submit)="saveChanges()">
+                    <div class="collapse d-lg-block">
                         <div class="row">
                         
 
                             <div class="mb-2 col-lg-6">
-                                <label for="eventname" class="form-label small">Event Name</label>
-                                <input type="text" class="form-control" id="eventname" formControlName = "eventname"
+                                <label for="eventname{{eventData.id}}" class="form-label small">Event Name</label>
+                                <input type="text" class="form-control" id="eventname{{eventData.id}}" formControlName = "eventname"
                                 [class.is-valid]="!eventForm.get('eventname')?.errors && (eventForm.get('eventname')?.touched || eventForm.get('eventname')?.dirty)"
                                 [class.is-invalid]="eventForm.get('eventname')?.errors && (eventForm.get('eventname')?.touched || eventForm.get('eventname')?.dirty)">
                                 <div *ngIf="eventForm.get('eventname')?.errors && (eventForm.get('eventname')?.touched || eventForm.get('eventname')?.dirty)" class="form-text text-danger">
@@ -65,20 +65,20 @@
                               </div>
                             
                             <div class="mb-2">
-                                <label for="description" class="form-label small">Description</label>
-                                <textarea class="form-control" id="description" formControlName = "description" rows="2" [class.is-valid]="eventForm.get('description')?.touched || eventForm.get('description')?.dirty"></textarea>
+                                <label for="description{{eventData.id}}" class="form-label small">Description</label>
+                                <textarea class="form-control" id="description{{eventData.id}}" formControlName = "description" rows="2" [class.is-valid]="eventForm.get('description')?.touched || eventForm.get('description')?.dirty"></textarea>
                             </div>
 
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <label for="allday" class="form-check-label small">All Day</label>
-                                    <input type="checkbox" class="form-check-input" id="allday" formControlName = "allday">
+                                    <label for="allday{{eventData.id}}" class="form-check-label small">All Day</label>
+                                    <input type="checkbox" class="form-check-input" id="allday{{eventData.id}}" formControlName = "allday">
                                 </div>
                             </div>
 
                             <div class="mb-3 col-3">
-                                <label for="startdate" class="form-label small" >Start Date</label>
-                                <input type="date" class="form-control form-control-sm" id="startdate" formControlName = "startdate"
+                                <label for="startdate{{eventData.id}}" class="form-label small" >Start Date</label>
+                                <input type="date" class="form-control form-control-sm" id="startdate{{eventData.id}}" formControlName = "startdate"
                                 [class.is-valid]="!eventForm.get('startdate')?.errors && (eventForm.get('startdate')?.touched || eventForm.get('startdate')?.dirty)"
                                 [class.is-invalid]="eventForm.get('startdate')?.errors && (eventForm.get('startdate')?.touched || eventForm.get('startdate')?.dirty)">
                                 <div *ngIf="eventForm.get('startdate')?.errors && (eventForm.get('startdate')?.touched || eventForm.get('startdate')?.dirty)" class="form-text text-danger">
@@ -89,8 +89,8 @@
 
                             <div class="mb-3 col-3" *ngIf="eventForm.get('allday')?.value == false">
                               
-                                <label for="starttime" class="form-label small">Start Time</label>
-                                <input type="time" class="form-control form-control-sm" id="starttime" formControlName = "starttime"
+                                <label for="starttime{{eventData.id}}" class="form-label small">Start Time</label>
+                                <input type="time" class="form-control form-control-sm" id="starttime{{eventData.id}}" formControlName = "starttime"
                                 [class.is-valid]="!eventForm.hasError('startTimeRequired') && (eventForm.get('starttime')?.touched || eventForm.get('starttime')?.dirty)"
                                 [class.is-invalid]="eventForm.hasError('startTimeRequired') && (eventForm.get('starttime')?.touched || eventForm.get('starttime')?.dirty)">
                                 <div *ngIf="eventForm.hasError('startTimeRequired') && (eventForm.get('starttime')?.touched || eventForm.get('starttime')?.dirty)" class="form-text text-danger">
@@ -99,8 +99,8 @@
                             </div>
 
                               <div class="mb-3 col-3">
-                                <label for="enddate" class="form-label small">End Date</label>
-                                <input type="date" class="form-control form-control-sm" id="enddate" formControlName = "enddate"
+                                <label for="enddate{{eventData.id}}" class="form-label small">End Date</label>
+                                <input type="date" class="form-control form-control-sm" id="enddate{{eventData.id}}" formControlName = "enddate"
                                 [class.is-valid]="!eventForm.get('enddate')?.errors && (eventForm.get('enddate')?.touched || eventForm.get('enddate')?.dirty)"
                                 [class.is-invalid]="eventForm.get('enddate')?.errors && (eventForm.get('enddate')?.touched || eventForm.get('enddate')?.dirty)">
                                 <div *ngIf="eventForm.get('enddate')?.errors && (eventForm.get('enddate')?.touched || eventForm.get('enddate')?.dirty)" class="form-text text-danger">
@@ -110,8 +110,8 @@
 
         
                             <div class="mb-3 col-3" *ngIf="eventForm.get('allday')?.value == false">
-                                <label for="endtime" class="form-label small">End Time</label>
-                                <input type="time" class="form-control form-control-sm" id="endtime" formControlName = "endtime"
+                                <label for="endtime{{eventData.id}}" class="form-label small">End Time</label>
+                                <input type="time" class="form-control form-control-sm" id="endtime{{eventData.id}}" formControlName = "endtime"
                                 [class.is-valid]="!eventForm.hasError('endTimeRequired') && (eventForm.get('endtime')?.touched || eventForm.get('endtime')?.dirty)"
                                 [class.is-invalid]="eventForm.hasError('endTimeRequired') && (eventForm.get('endtime')?.touched || eventForm.get('endtime')?.dirty)">
                                 <div *ngIf="eventForm.hasError('endTimeRequired') && (eventForm.get('endtime')?.touched || eventForm.get('endtime')?.dirty)" class="form-text text-danger">
@@ -120,35 +120,35 @@
                             </div>
         
                             <div class="mb-3">
-                                <label for="repeat" class="form-label">Repeat</label>
-                                <div class="form-control" id ="repeat" [formGroup]="repeatFormGroup">
+                                <label for="repeat{{eventData.id}}" class="form-label">Repeat</label>
+                                <div class="form-control" id ="repeat{{eventData.id}}" [formGroup]="repeatFormGroup">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="monday" formControlName="mon">
-                                        <label class="form-check-label small" for="monday">Mo</label>
+                                        <input class="form-check-input" type="checkbox" id="monday{{eventData.id}}" formControlName="mon">
+                                        <label class="form-check-label small" for="monday{{eventData.id}}">Mo</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="tuesday" formControlName="tue">
-                                        <label class="form-check-label small" for="tuesday">Tu</label>
+                                        <input class="form-check-input" type="checkbox" id="tuesday{{eventData.id}}" formControlName="tue">
+                                        <label class="form-check-label small" for="tuesday{{eventData.id}}">Tu</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="wednesday" formControlName="wed">
-                                        <label class="form-check-label small" for="wednesday">We</label>
+                                        <input class="form-check-input" type="checkbox" id="wednesday{{eventData.id}}" formControlName="wed">
+                                        <label class="form-check-label small" for="wednesday{{eventData.id}}">We</label>
                                     </div>
                                       <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="thursday" formControlName="thu">
-                                        <label class="form-check-label small" for="thursday">Th</label>
+                                        <input class="form-check-input" type="checkbox" id="thursday{{eventData.id}}" formControlName="thu">
+                                        <label class="form-check-label small" for="thursday{{eventData.id}}">Th</label>
                                       </div>
                                       <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="friday" formControlName="fri">
-                                        <label class="form-check-label small" for="friday">Fr</label>
+                                        <input class="form-check-input" type="checkbox" id="friday{{eventData.id}}" formControlName="fri">
+                                        <label class="form-check-label small" for="friday{{eventData.id}}">Fr</label>
                                       </div>
                                       <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="saturday" formControlName="sat">
-                                        <label class="form-check-label small" for="saturday">Sa</label>
+                                        <input class="form-check-input" type="checkbox" id="saturday{{eventData.id}}" formControlName="sat">
+                                        <label class="form-check-label small" for="saturday{{eventData.id}}">Sa</label>
                                       </div>
                                       <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="sunday" formControlName="sun">
-                                        <label class="form-check-label small" for="sunday">Su</label>
+                                        <input class="form-check-input" type="checkbox" id="sunday{{eventData.id}}" formControlName="sun">
+                                        <label class="form-check-label small" for="sunday{{eventData.id}}">Su</label>
                                       </div>
                                 </div>
                             </div>
@@ -156,17 +156,17 @@
                             @if (isRepeat) {
                                 <div class="mb-3">
                                   <div class="row g-3">
-                                    <label for="repeat" class="form-label col-3 small">Repeat Ends</label>
+                                    <label class="form-label col-3 small">Repeat Ends</label>
                                     <div class="form-check form-switch col-3">
-                                      <input class="form-check-input" type="checkbox" role="switch" id="repeatNever" formControlName="repeatNever">
-                                      <label class="form-check-label small" for="repeatNever">Never</label>
+                                      <input class="form-check-input" type="checkbox" role="switch" id="repeatNever{{eventData.id}}" formControlName="repeatNever">
+                                      <label class="form-check-label small" for="repeatNever{{eventData.id}}">Never</label>
                                     </div>
                                     @if (!eventForm.get('repeatNever')?.value) {
                                             <div class="col-3">
-                                              <label for="repeatEndDate" class="form-label small">Repeat End Date</label>
+                                              <label for="repeatEndDate{{eventData.id}}" class="form-label small">Repeat End Date</label>
                                             </div>
                                             <div class="col-3">
-                                              <input type="date" class="form-control col-3 form-control-sm" id="repeatEndDate" formControlName="repeatEndDate"
+                                              <input type="date" class="form-control col-3 form-control-sm" id="repeatEndDate{{eventData.id}}" formControlName="repeatEndDate"
                                               [class.is-valid]="!eventForm.hasError('repeatEndDateRequired') && (eventForm.get('repeatEndDate')?.touched || eventForm.get('repeatEndDate')?.dirty)"
                                               [class.is-invalid]="eventForm.hasError('repeatEndDateRequired') && (eventForm.get('repeatEndDate')?.touched || eventForm.get('repeatEndDate')?.dirty)">
                                               <div *ngIf="eventForm.hasError('repeatEndDateRequired') && (eventForm.get('repeatEndDate')?.touched || eventForm.get('repeatEndDate')?.dirty)" class="form-text text-danger">
@@ -192,3 +192,32 @@
          </div>
     </div>
   </div>
+
+
+  <!-- The Modal -->
+<div class="modal fade" id="confirmDeleteModal{{eventData.id}}" tabindex="-1" [attr.aria-labelledby]="'confirmDeleteModal' + eventData.id + 'Label'" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModal{{eventData.id}}Label">Confirm Delete</h5>
+        <button type="button" class="btn-close" #closeButton data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <p>Are you sure you want to delete the event with ID: <strong>{{ eventData.id }}</strong>?</p>
+        <p *ngIf="eventData.repeat">This is a recurring event. You can delete just this instance or delete the entire series.</p>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button *ngIf="eventData.repeat" type="button" class="btn btn-warning" (click)="deleteInstance()">Delete Just This Instance</button>
+        <button type="button" class="btn btn-danger" (click)="deleteEntirely()">Delete Entirely</button>
+      </div>
+
+    </div>
+  </div>
+</div>
