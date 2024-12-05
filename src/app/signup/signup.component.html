@@ -1,0 +1,142 @@
+<div class="d-flex justify-content-center">
+    <div class="col-12 col-lg-6 col-md-8 align-self-center">
+        
+        <div class="card bg-transparent text-light border-dark-subtle mb-3 my-3">
+            <form [formGroup]="signupForm" (submit)="signup()" (change)="disableWarn()">
+                <div class="card-header bg-transparent border-white">Signup</div>
+                <div class="card-body row">
+                    
+                    <div class="mb-3 col-md-6">
+                        <label for="firstname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstname" formControlName = "firstname"
+                            [class.is-invalid]="signupForm.get('firstname')?.errors && (signupForm.get('firstname')?.touched || signupForm.get('firstname')?.dirty)"
+                            [class.is-valid]="!signupForm.get('firstname')?.errors && (signupForm.get('firstname')?.touched || signupForm.get('firstname')?.dirty)">
+                        <div *ngIf="signupForm.get('firstname')?.errors && (signupForm.get('firstname')?.touched || signupForm.get('firstname')?.dirty)" class="form-text text-danger">
+                          <div *ngIf="signupForm.get('firstname')?.hasError('required')">*First Name is required.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="lastname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" formControlName = "lastname"
+                        [class.is-invalid]="signupForm.get('lastname')?.errors && (signupForm.get('lastname')?.touched || signupForm.get('lastname')?.dirty)"
+                        [class.is-valid]="!signupForm.get('lastname')?.errors && (signupForm.get('lastname')?.touched || signupForm.get('lastname')?.dirty)">
+                        <div *ngIf="signupForm.get('lastname')?.errors && (signupForm.get('lastname')?.touched || signupForm.get('lastname')?.dirty)" class="form-text text-danger">
+                            <div *ngIf="signupForm.get('lastname')?.hasError('required')">*Last Name is required.</div>
+                        </div>
+                    </div>
+                
+                    <div class="mb-3">
+                        <label for="username" class="form-label">User Name</label>
+                        <input type="text" class="form-control" id="username" formControlName = "username" 
+                            [class.is-invalid]="signupForm.get('username')?.errors && (signupForm.get('username')?.touched || signupForm.get('username')?.dirty)"
+                            [class.is-valid]="!signupForm.get('username')?.errors && (signupForm.get('username')?.touched || signupForm.get('username')?.dirty)">
+                        <div *ngIf="signupForm.get('username')?.errors && (signupForm.get('username')?.touched || signupForm.get('username')?.dirty)" class="form-text text-danger">
+                            <div *ngIf="signupForm.get('username')?.hasError('required')">*User Name is required.</div>
+                            <div *ngIf="signupForm.get('username')?.hasError('minlength') || signupForm.get('username')?.hasError('maxlength')">*User Name should contain 3-20 letters.</div>
+                            <div *ngIf="signupForm.get('username')?.hasError('pattern')">*User Name should not contain any special characters.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" formControlName = "email"
+                        [class.is-invalid]="signupForm.get('email')?.errors && (signupForm.get('email')?.touched || signupForm.get('email')?.dirty)"
+                        [class.is-valid]="!signupForm.get('email')?.errors && (signupForm.get('email')?.touched || signupForm.get('email')?.dirty)">
+                        <div *ngIf="signupForm.get('email')?.errors && (signupForm.get('email')?.touched || signupForm.get('email')?.dirty)" class="form-text text-danger">
+                            <div *ngIf="signupForm.get('email')?.hasError('required')">*Email is required.</div>
+                            <div *ngIf="signupForm.get('email')?.hasError('email')">*Email should be in correct format.</div>
+                        </div>
+                     </div>
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="phone" formControlName = "phone"
+                        [class.is-invalid]="signupForm.get('phone')?.errors && (signupForm.get('phone')?.touched || signupForm.get('phone')?.dirty)"
+                        [class.is-valid]="!signupForm.get('phone')?.errors && (signupForm.get('phone')?.touched || signupForm.get('phone')?.dirty)">
+                        <div *ngIf="signupForm.get('phone')?.errors && (signupForm.get('phone')?.touched || signupForm.get('phone')?.dirty)" class="form-text text-danger">
+                            <div *ngIf="signupForm.get('phone')?.hasError('required')">*Phone number is required.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" formControlName = "password"
+                        [class.is-invalid]="signupForm.get('password')?.errors && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty)"
+                        [class.is-valid]="!signupForm.get('password')?.errors && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty)">
+                        <div *ngIf="signupForm.get('password')?.errors && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty)" class="form-text text-danger">
+                            <div *ngIf="signupForm.get('password')?.hasError('required')">*Password is required.</div>
+                            <div *ngIf="signupForm.get('password')?.hasError('minlength')">*Password should be of minimum 8 charactes.</div>
+                            <div *ngIf="signupForm.get('password')?.hasError('pattern')">*Password must contain at least 1 number, 1 lowercase letter, 1 uppercase letter, and 1 special character </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" formControlName = "confirmPassword"
+                        [class.is-invalid]="signupForm.get('confirmPassword')?.errors && (signupForm.get('confirmPassword')?.touched || signupForm.get('confirmPassword')?.dirty)"
+                        [class.is-valid]="!signupForm.get('confirmPassword')?.errors && (signupForm.get('confirmPassword')?.touched || signupForm.get('confirmPassword')?.dirty)">
+                        <div *ngIf="signupForm.get('confirmPassword')?.errors && (signupForm.get('confirmPassword')?.touched || signupForm.get('confirmPassword')?.dirty)" class="form-text text-danger">
+                            <div *ngIf="signupForm.get('confirmPassword')?.hasError('required')">*Confirm Password is required.</div>
+                            <div *ngIf="signupForm.hasError('passwordMismatch')">*Password and Confirm Password should match</div>
+                        </div>
+                    </div>
+                    
+            </div>
+            <div class="card-footer bg-transparent border-0">
+
+                @if(!formValid) {
+                    <div class="my-2">
+                        <div class="alert alert-warning" role="alert">
+                            Form should be valid before submitting
+                          </div>
+                    </div>
+                }
+                <div class="my-2 mb-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                
+                @if(success) {
+                    <div class="my-2">
+                        <div class="alert alert-success" role="alert">
+                            Account Created Succesfully
+                          </div>
+                    </div>
+                }
+
+                @if(error) {
+                    <div class="my-2">
+                        <div class="alert alert-danger" role="alert">
+                            {{errorMessage}}
+                          </div>
+                    </div>
+                }
+            </div>
+            </form>
+            
+          </div>
+
+    </div>
+
+    <div class="icon-container">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16" style="color: white;">
+            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
+            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+          </svg> -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
+            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+          </svg>
+    </div>
+    
+    <div class="icon-container-2">
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16" style="color: white;">
+            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
+            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+          </svg> -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
+            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+          </svg>
+    </div>
+</div>
+

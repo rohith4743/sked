@@ -1,0 +1,14 @@
+
+  .icon-container {
+    position: fixed;
+    bottom: -80px; /* Adjust as needed */
+    left: -80px; /* Adjust as needed */
+    opacity: 0.3; /* Adjust to blend the icon */
+    
+  }
+  
+  .icon-container svg {
+    width: 400px; /* Adjust size as needed */
+    height: 400px; /* Adjust size as needed */
+    fill: rgba(255, 255, 255, 0.3); /* Adjust color and transparency */
+  }

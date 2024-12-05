@@ -1,0 +1,194 @@
+<div class="container-fluid">
+  
+    <div class="row text-white mx-3">
+      <div class="col-lg-6 order-2 order-lg-1">
+        <div class="row my-3">
+          <app-date-nav (dateChange)="updateEvents($event)"></app-date-nav>
+        </div>
+        <div class="my-3">
+          <h4>All Day Events</h4>
+        </div>
+        @for (event of allDayEvents; track event.id) {
+          <div class="my-3">
+            <app-event [eventData]="event" class="my-3"></app-event>
+          </div>
+        }
+        <div class="my-3">
+          <h4>Events</h4>
+        </div>
+        @for (event of nonAllDayEvents; track event.id) {
+          <div class="my-3">
+            <app-event [eventData]="event" class="my-3" (refreshEmitter)="loadEvents(dateToday)" [dateToday]="dateToday"></app-event>
+          </div>
+        }
+
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2">
+        <div class="card bg-transparent text-light border-dark-subtle mb-3 my-3 ">
+            <form [formGroup]="addEventForm" (submit)="addEvent()">
+            
+                <div class="card-header border-dark-subtle justify-content-between align-items-center fs-4">
+                  <div class="d-none d-lg-block">
+                    Add Event
+                  </div>
+                  <div class="d-lg-none w-100 d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseCardBody" aria-expanded="false" aria-controls="collapseCardBody">
+                    Add Event
+                    <span class="collapse-toggle-arrow">▼</span>
+                  </div>
+                </div>
+            
+                <div id="collapseCardBody" class="collapse d-lg-block">
+                    <div class="card-body row">
+                    
+                        <div class="mb-3">
+                            <label for="eventname" class="form-label">Event Name</label>
+                            <input type="text" class="form-control" id="eventname" formControlName = "eventname"
+                            [class.is-valid]="!addEventForm.get('eventname')?.errors && (addEventForm.get('eventname')?.touched || addEventForm.get('eventname')?.dirty)"
+                            [class.is-invalid]="addEventForm.get('eventname')?.errors && (addEventForm.get('eventname')?.touched || addEventForm.get('eventname')?.dirty)">
+                            <div *ngIf="addEventForm.get('eventname')?.errors && (addEventForm.get('eventname')?.touched || addEventForm.get('eventname')?.dirty)" class="form-text text-danger">
+                              <div *ngIf="addEventForm.get('eventname')?.hasError('required')">*Event Name is required.</div>
+                          </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" formControlName = "description" rows="2" [class.is-valid]="addEventForm.get('description')?.touched || addEventForm.get('description')?.dirty"></textarea>
+                        </div>
+    
+                    
+                        <div class="mb-3">
+                          <label for="category" class="form-label">Category</label>                    
+                          <ng-select [items]="categories" bindLabel="name" bindValue="value" placeholder="Select a category" formControlName="category" [addTag]="true" >
+                        </ng-select>
+                      
+                        </div>
+    
+    
+                        <div class="mb-3 ">
+                            <div class="form-check">
+                                <label for="allday" class="form-check-label">All Day</label>
+                                <input type="checkbox" class="form-check-input" id="allday" formControlName = "allday" >
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-6">
+                          <label for="startdate" class="form-label" >Start Date</label>
+                          <input type="date" class="form-control" id="startdate" formControlName = "startdate"
+                          [class.is-valid]="!addEventForm.get('startdate')?.errors && (addEventForm.get('startdate')?.touched || addEventForm.get('startdate')?.dirty)"
+                          [class.is-invalid]="addEventForm.get('startdate')?.errors && (addEventForm.get('startdate')?.touched || addEventForm.get('startdate')?.dirty)">
+                          <div *ngIf="addEventForm.get('startdate')?.errors && (addEventForm.get('startdate')?.touched || addEventForm.get('startdate')?.dirty)" class="form-text text-danger">
+                            <div *ngIf="addEventForm.get('startdate')?.hasError('required')">*Start Date is required.</div>
+                          </div>
+                        </div>
+
+                        <div class="mb-3 col-6" *ngIf="addEventForm.get('allday')?.value == false">
+                          
+                            <label for="starttime" class="form-label">Start Time</label>
+                            <input type="time" class="form-control" id="starttime" formControlName = "starttime"
+                            [class.is-valid]="!addEventForm.hasError('startTimeRequired') && (addEventForm.get('starttime')?.touched || addEventForm.get('starttime')?.dirty)"
+                            [class.is-invalid]="addEventForm.hasError('startTimeRequired') && (addEventForm.get('starttime')?.touched || addEventForm.get('starttime')?.dirty)">
+                            <div *ngIf="addEventForm.hasError('startTimeRequired') && (addEventForm.get('starttime')?.touched || addEventForm.get('starttime')?.dirty)" class="form-text text-danger">
+                              <div *ngIf="addEventForm.hasError('startTimeRequired')">*Start Time is required.</div>
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 col-6">
+                            <label for="enddate" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="enddate" formControlName = "enddate"
+                            [class.is-valid]="!addEventForm.get('enddate')?.errors && (addEventForm.get('enddate')?.touched || addEventForm.get('enddate')?.dirty)"
+                            [class.is-invalid]="addEventForm.get('enddate')?.errors && (addEventForm.get('enddate')?.touched || addEventForm.get('enddate')?.dirty)">
+                            <div *ngIf="addEventForm.get('enddate')?.errors && (addEventForm.get('enddate')?.touched || addEventForm.get('enddate')?.dirty)" class="form-text text-danger">
+                              <div *ngIf="addEventForm.get('enddate')?.hasError('required')">*End Date is required.</div>
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 col-6" *ngIf="addEventForm.get('allday')?.value == false">
+                            <label for="endtime" class="form-label">End Time</label>
+                            <input type="time" class="form-control" id="endtime" formControlName = "endtime"
+                            [class.is-valid]="!addEventForm.hasError('endTimeRequired') && (addEventForm.get('endtime')?.touched || addEventForm.get('endtime')?.dirty)"
+                            [class.is-invalid]="addEventForm.hasError('endTimeRequired') && (addEventForm.get('endtime')?.touched || addEventForm.get('endtime')?.dirty)">
+                            <div *ngIf="addEventForm.hasError('endTimeRequired') && (addEventForm.get('endtime')?.touched || addEventForm.get('endtime')?.dirty)" class="form-text text-danger">
+                              <div *ngIf="addEventForm.hasError('endTimeRequired')">*Start Time is required.</div>
+                            </div>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="repeat" class="form-label">Repeat</label>
+                            <div  id ="repeat" [formGroup]="repeatFormGroup">
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="monday" formControlName="mon">
+                                    <label class="form-check-label" for="monday">Mon</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="tuesday" formControlName="tue">
+                                    <label class="form-check-label" for="tuesday">Tue</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="wednesday" formControlName="wed">
+                                    <label class="form-check-label" for="wednesday">Wed</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="thursday" formControlName="thu">
+                                    <label class="form-check-label" for="thursday">Thu</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="friday" formControlName="fri">
+                                    <label class="form-check-label" for="friday">Fri</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="saturday" formControlName="sat">
+                                    <label class="form-check-label" for="saturday">Sat</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="sunday" formControlName="sun">
+                                    <label class="form-check-label" for="sunday">Sun</label>
+                                  </div>
+                            </div>
+                        </div>
+
+                      @if (isRepeat) {
+                        <div class="mb-3">
+                          <div class="row g-3">
+                            <label for="repeat" class="form-label col-4">Repeat Ends</label>
+                            <div class="form-check form-switch col-auto">
+                              <input class="form-check-input" type="checkbox" role="switch" id="repeatNever" formControlName="repeatNever">
+                              <label class="form-check-label" for="repeatNever">Never</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        @if (!addEventForm.get('repeatNever')?.value) {
+                          <div class="mb-3">
+                            <div class="row g-3">
+                              <div class="col-4">
+                                <label for="repeatEndDate" class="form-label ">Repeat End Date</label>
+                              </div>
+                              <div class="col-auto">
+                                <input type="date" class="form-control col-auto" id="repeatEndDate" formControlName="repeatEndDate"
+                                [class.is-valid]="!addEventForm.hasError('repeatEndDateRequired') && (addEventForm.get('repeatEndDate')?.touched || addEventForm.get('repeatEndDate')?.dirty)"
+                                [class.is-invalid]="addEventForm.hasError('repeatEndDateRequired') && (addEventForm.get('repeatEndDate')?.touched || addEventForm.get('repeatEndDate')?.dirty)">
+                                <div *ngIf="addEventForm.hasError('repeatEndDateRequired') && (addEventForm.get('repeatEndDate')?.touched || addEventForm.get('repeatEndDate')?.dirty)" class="form-text text-danger">
+                                  <div *ngIf="addEventForm.hasError('repeatEndDateRequired')">*Start Time is required.</div>
+                                </div>
+                              </div>
+                              
+                              
+                            </div>
+                          </div>
+                        }
+
+                      }
+                </div>
+                <div class="card-footer bg-transparent border-dark-subtle">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+                </div>
+                
+            
+            </form>
+            
+          </div>
+      </div>
+    </div>
+  </div>
+  

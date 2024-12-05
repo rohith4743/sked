@@ -1,0 +1,16 @@
+<nav class="navbar">
+    <div class="container-fluid">
+      
+      <span class="navbar-brand"><a class="navbar-brand" routerLink="/home">Skedule</a> <span>{{username | titlecase}}</span></span>
+
+      @if (router.url == "/signup") {
+        <a class="nav-link" routerLink="/login">Login</a>
+      } @else if (router.url === '/login') {
+        <a class="nav-link" routerLink="/signup">Sign Up</a>
+      } @else if (router.url === '/home' || router.url === '/'){
+        <button class="btn btn-link" (click)="logout()">Logout</button>
+      } @else {
+        <a class="nav-link" routerLink="/login">Login</a>
+      }
+    </div>
+  </nav>
